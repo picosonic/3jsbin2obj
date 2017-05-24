@@ -5,7 +5,7 @@ CC = gcc
 all: 3jsbin
 
 3jsbin: 3jsbin.o
-	$(CC) -g -o 3jsbin 3jsbin.o -lssh
+	$(CC) -g -o 3jsbin 3jsbin.o
 
 3jsbin.o: 3jsbin.c
 	$(CC) $(BUILDFLAGS) -c -o 3jsbin.o 3jsbin.c
