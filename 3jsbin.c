@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
-#define BUFFSIZE (30*1024*1024)
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 unsigned char *buffer;
 unsigned int offs;
@@ -104,6 +105,7 @@ int main(int argc, char **argv)
   unsigned char headerlen;
   uint32_t i;
   uint32_t vt;
+  struct stat st;
 
   if (argc!=2)
   {
@@ -111,18 +113,24 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  buffer=malloc(BUFFSIZE);
+  if (stat(argv[1], &st)!=0)
+  {
+    fprintf(stderr, "Unable to check file '%s'\n", argv[1]);
+    return 1;
+  }
+
+  buffer=malloc(st.st_size);
 
   if (buffer==NULL)
   {
-    fprintf(stderr, "Unable to allocate %d bytes for buffer\n", BUFFSIZE);
+    fprintf(stderr, "Unable to allocate %ld bytes for buffer\n", st.st_size);
     return 1;
   }
 
   fp=fopen(argv[1], "r");
   if (fp!=NULL)
   {
-    flen=fread(buffer, 1, BUFFSIZE, fp);
+    flen=fread(buffer, 1, st.st_size, fp);
     fclose(fp);
   }
   else

@@ -15,7 +15,6 @@ Processing data and statistics will be output to standard error.
  * `<filename.obj>` The output wavefront .obj file
 
 ## Notes :
- * Maximum .bin file size is limited to 30Mb
  * All values are assumed to be little-endian
- * A default materials file will (tex.mtl) be added to the .obj
+ * A default materials file (tex.mtl) will be added to the .obj
  * Material indexes are not processed and are instead allocated a number with prefix "Texture_"
